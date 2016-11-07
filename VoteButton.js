@@ -11,10 +11,10 @@ const getNextDecision = d => {
   return '?'
 }
 
-const VoteButton = ({ decision, onPress }) => (
-  <TouchableOpacity onPress={() => onPress(getNextDecision(decision))}>
+const VoteButton = ({ propCode, style, decision, onPress }) => (
+  <TouchableOpacity style={style} onPress={() => onPress(getNextDecision(decision))}>
     <View style={styles.button}>
-      <Text style={styles.text}>{decision}</Text>
+      <Text style={styles.text}>{decision} on {propCode}</Text>
     </View>
   </TouchableOpacity>
 )
@@ -24,13 +24,13 @@ VoteButton.propTypes = {
 const styles = {
   text: {
     fontSize: 20,
+    fontWeight: 'bold',
+    color: 'rgb(52, 52, 52)'
   },
   button: {
     alignItems: 'center',
     justifyContent: 'center',
     padding: 5,
-    borderWidth: 1,
-    borderColor: 'rgb(55, 72, 145)',
   }
 }
 export default VoteButton

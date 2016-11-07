@@ -4,16 +4,26 @@ import {
   Text,
   Image,
 } from 'react-native'
-const Proposition = ({ info }) => (
-  <View style={styles.proposition}>
-    <Image resizeMode="contain" style={styles.image} source={{ uri: info.image_url }} />
-    <Text style={styles.topText}>{info.title}</Text>
-    <View style={styles.propositionBadge}>
-      <Text style={styles.bottomText}>{info.sub_title}</Text>
-      <Text style={styles.codeText}>{info.prop_code}</Text>
+import VoteButton from './VoteButton'
+
+const Proposition = ({ info, onChangeVote }) => {
+  console.log('rendering', info.propCode)
+  return (
+    <View style={styles.proposition}>
+      <Image resizeMode="contain" style={styles.image} source={{ uri: info.image_url }} />
+      <Text style={styles.topText}>{info.title}</Text>
+      <View style={styles.propositionBadge}>
+        <Text style={styles.bottomText}>{info.sub_title}</Text>
+        <VoteButton
+          propCode={info.propCode}
+          style={styles.codeText}
+          decision={info.decision}
+          onPress={onChangeVote}
+        />
+      </View>
     </View>
-  </View>
-)
+  )
+}
 const styles = {
   proposition: {
     margin: 5,
@@ -49,11 +59,6 @@ const styles = {
   },
   codeText: {
     flex: 1,
-    textAlign: 'right',
-    paddingRight: 10,
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'rgba(50, 50, 50, 0.8)',
   }
 }
 export default Proposition
