@@ -3,33 +3,37 @@ import {
   View,
   Text,
   Image,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+  Platform,
 } from 'react-native'
 import VoteButton from './VoteButton'
 
-const Proposition = ({ info, onChangeVote }) => {
-  console.log('rendering', info.propCode)
+const PlatformTouchable = Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback
+const Proposition = ({ info, onChangeVote, onSelect }) => {
   return (
-    <View style={styles.proposition}>
-      <Image resizeMode="contain" style={styles.image} source={{ uri: info.image_url }} />
-      <Text style={styles.topText}>{info.title}</Text>
-      <View style={styles.propositionBadge}>
-        <Text style={styles.bottomText}>{info.sub_title}</Text>
-        <VoteButton
-          propCode={info.propCode}
-          style={styles.codeText}
-          decision={info.decision}
-          onPress={onChangeVote}
-        />
+    <PlatformTouchable onPress={onSelect}>
+      <View style={[styles.proposition, { backgroundColor: info.color }]}>
+        <Image resizeMode="contain" style={styles.image} source={{ uri: info.imageUrl }} />
+        <Text style={styles.topText}>{info.title}</Text>
+        <View style={styles.propositionBadge}>
+          <Text style={styles.bottomText}>{info.subTitle}</Text>
+          <VoteButton
+            propCode={info.propCode}
+            style={styles.codeText}
+            decision={info.decision}
+            onPress={onChangeVote}
+          />
+        </View>
       </View>
-    </View>
+    </PlatformTouchable>
   )
 }
 const styles = {
   proposition: {
     margin: 5,
-    height: 300,
+    height: 250,
     justifyContent: 'space-between',
-    backgroundColor: 'rgb(111, 128, 222)',
   },
   image: {
     width: 150,
@@ -50,15 +54,17 @@ const styles = {
     fontSize: 20,
     color: 'white',
     paddingLeft: 10,
+    fontWeight: 'bold',
   },
   bottomText: {
-    flex: 1,
+    flex: 3,
     paddingLeft: 10,
     fontSize: 14,
+    fontWeight: 'bold',
     color: 'white',
   },
   codeText: {
-    flex: 1,
+    flex: 2,
   }
 }
 export default Proposition

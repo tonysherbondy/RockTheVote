@@ -1,10 +1,9 @@
 import React from 'react'
 import {
   ListView,
-  TouchableOpacity,
 } from 'react-native'
 import Proposition from './Proposition'
-const URL = 'https://gist.githubusercontent.com/tonysherbondy/70506381d9987f2b2a2527b7e4988a10/raw/f19a9077ce6a567be661afd08d5a7d6a25bcedd1/california_propositions.json'
+const URL = 'https://gist.githubusercontent.com/tonysherbondy/70506381d9987f2b2a2527b7e4988a10/raw/8b667e756288548e8d9a8aae35aa7634abf8bce3/california_propositions.json'
 
 class Propositions extends React.Component {
   state = {
@@ -17,9 +16,8 @@ class Propositions extends React.Component {
       .then(({ propositions }) => {
         this.propositions = {}
         propositions.forEach(p => {
-          this.propositions[p.prop_code] = {
+          this.propositions[p.propCode] = {
             ...p,
-            propCode: p.prop_code,
             decision: '?'
           }
         })
@@ -41,12 +39,11 @@ class Propositions extends React.Component {
       this.setListState()
     }
     return (
-      <TouchableOpacity onPress={() => this.props.onPressRow(row.propCode)}>
-        <Proposition
-          info={row}
-          onChangeVote={d => onChangeVote(row.propCode, d)}
-        />
-      </TouchableOpacity>
+      <Proposition
+        info={row}
+        onSelect={() => this.props.onPressRow(row.propCode)}
+        onChangeVote={d => onChangeVote(row.propCode, d)}
+      />
     )
   }
   render() {
